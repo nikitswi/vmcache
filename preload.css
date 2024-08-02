@@ -1,0 +1,10 @@
+
+
+
+div:not( #prewiev,  #appprewiev), button, a, p, text, img{
+transform: translateY(120vh);
+}
+#prewiev,  #appprewiev{
+opacity: 0;
+filter: blur(10px);
+}

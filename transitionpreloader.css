@@ -1,0 +1,8 @@
+
+div:not( #prewiev,  #appprewiev), button, a, p, text, img{
+    transition: all 2.5s cubic-bezier(0.075, 0.102, 0.265, 1)!important;
+}
+#prewiev,  #appprewiev{
+    transition: all 0.7s ease-in-out!important;
+    transition-delay: 1s!important;
+}

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDC Store</title>
+    <script src="sw.js"></script>
+    <script src="/manifestcheck.js"></script>
+    <link rel="icon" type="image/png" href="/wifi.png"/>
+    <link rel="icon" type="image/png" href="/wifi.png"/>
+    <meta name="theme-color" id="theme-color-meta" content="#ffffff">
+    
+    <link rel="stylesheet" id="preloaderanimation" href="preload.css">
+    <link rel="stylesheet" id="transitionpreloader" href="transitionpreloader.css" >
+
+    <script>
+        // Регистрация сервисного работника
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('sw.js')
+              .then(function(registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+              })
+              .catch(function(error) {
+                console.log('ServiceWorker registration failed: ', error);
+              });
+          });
+        }
+      </script>
+
+      
+</head>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const preloaderanimation = document.getElementById('preloaderanimation');
+  const transitionpreloader = document.getElementById('transitionpreloader');
+    setTimeout(() => {
+        preloaderanimation.remove();
+        setTimeout(() => {
+            transitionpreloader.remove();
+        }, 5500);
+    }, 500);
+  });
+</script>
+
+<header>
+    <div id="howtoios">
+        <div id="howtext">Для установки приложения вам нужно нажать "Поделиться", а затем выбрать в меню "Добавить на экран «Домой»"</div>
+        <div id="gifinstall"></div>
+        <div id="forbtnios">
+        <button onclick="closepopinstall()" id="closebtninstios">Закрыть</button>
+        </div>
+    </div>
+</header>
+
+
+<body>
+    <div id="prewiev"></div>
+    <div id="appprewiev"></div>
+   
+    <div id="app">
+        <div id="appabout">
+        <img id="appicon" src="img.jpg"></img>
+        <div id="titleapp">ВанильМаркет
+         <div id="developertitle">Разработчик:           
+             <a id="developerapp">WDC DEV</a>
+            </div>  
+
+            <div id="sizeapp">Требуется места:
+                <a id="sizeappreal">37 KB</a>
+            </div>
+
+            <div id="buttons">
+            <button id="installbutton"
+            onclick="
+            var iOS = !window.MSStream && /iPad|iPhone|iPod/.test(navigator.userAgent);
+            if (iOS) { 
+                iosinstall();          
+            }else{
+                if ('serviceWorker' in navigator && 'BeforeInstallPromptEvent' in window) {
+          window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault();
+            let deferredPrompt = event;
+              deferredPrompt.prompt();
+              deferredPrompt.userChoice
+                .then((choiceResult) => {
+                  deferredPrompt = null;
+                });
+            });
+        }
+            }
+            ">Установить</button>
+            <button id="sitewdc" onclick="sitewdcopen()">Сайт разработчика</button>
+        </div>
+        </div>
+    </div>
+
+    <div id="prewsliders" style="margin-bottom: -40px;">
+        <a id="prewslider">Описание</a>
+        </div>
+    <div id="descriptionabout">
+    <a id="desctxt" style="font-weight: 100;">Установите наше приложения, для быстрого заказа и накопления бонусов в личном кабинете, а так же персональных скидок и промокодов!</a>
+        </div>
+   
+
+    <div id="prewsliders">
+    <a id="prewslider">Снимки из приложения</a>
+    </div>
+    <div class="slider">
+        <div class="slides">
+          <div id="slide-1"></div>
+          <div id="slide-2"></div>
+          <div id="slide-3"> </div>
+        </div>
+        <button onclick="openslider()" id="sitewdc" class="gallerytextchange" style="margin-top: 20px; height: 40px; width: 200px;">Открыть полностью</button>
+      </div>
+
+      <div id="descapp">
+        <div id="descriptiontxtapp">Размер:
+    <a id="desctxt">37 KB</a>
+        </div>
+        <div id="descriptiontxtapp">Разработчик:
+            <a id="desctxt">WDC DEV</a>
+                </div>
+                <div id="descriptiontxtapp">Платформы:
+                    <a id="desctxt">iOS и Android</a>
+                        </div>
+                        <div id="descriptiontxtapp">Ваша платформа:
+                            <a id="desctxt" class="yourplatfrom" style="color: #0077FF; font-weight: 500;"></a>
+                                </div>
+      </div>
+    </div>
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator && 'BeforeInstallPromptEvent' in window) {
+          window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault();
+            const installButton = document.getElementById('installbutton');
+            let deferredPrompt = event;
+            installButton.addEventListener('click', () => {
+              deferredPrompt.prompt();
+              deferredPrompt.userChoice
+                .then((choiceResult) => {
+                  deferredPrompt = null;
+                });
+            });
+          });
+        }
+      </script>
+
+ <script>
+    var  iframeContainer = document.querySelector("body");
+    var iframe = document.createElement("iframe");
+
+    var buttonclose = document.createElement("button");
+
+    function sitewdcopen(){
+    iframe.src = "https://wdc-dev.ru";
+    iframeContainer.appendChild(iframe);
+    iframe.id = "tabwdc";
+
+    buttonclose.id = "closebtn";
+    iframeContainer.appendChild(buttonclose);
+    buttonclose.textContent = "Вернуться назад";
+    buttonclose.onclick = sitewdcsloe;
+    }
+
+    function sitewdcsloe(){
+        buttonclose.style.opacity = "0"
+        iframe.style.transform = "translateX(120%)";
+        setTimeout(function() {
+            buttonclose.style.opacity = "1"
+        iframe.style.transform = "translateX(0%)";
+            iframeContainer.removeChild(buttonclose);
+            iframeContainer.removeChild(iframe);
+        }, 500);
+    }
+
+    function iosinstall(){
+    document.body.style.overflow = "hidden";
+    document.querySelector('header').style.display = "unset";
+    setTimeout(function() {
+        document.querySelector('header').style.transform = "TranslateY(0)"        
+    }, 300);
+}
+
+    function closepopinstall(){
+        document.querySelector('header').style.transform = "TranslateY(120vh)" ;
+        setTimeout(function() {
+            document.body.style.overflow = "";
+    document.querySelector('header').style.display = "none";     
+    }, 300);
+    }
+
+
+        function openslider(){
+        var elements = document.querySelectorAll('div:not(.slider, body, #app, #prewslider, .slides, #slide-1, #slide-2, #slide-3, #slide-4 )');
+            elements.forEach((element) => {
+                element.style.transition = "all 0.5s ease"
+                element.style.filter = "blur(10px)";
+            });
+            document.querySelector('.gallerytextchange').textContent = "Вернуться";
+            document.querySelector('.gallerytextchange').onclick = closeslider;
+
+            var slides = document.querySelectorAll(".slides > div");
+
+            slides.forEach((slide) => {
+                slide.style.transition = "all 1s ease";
+                slide.style.backgroundSize = "contain";
+                slide.style.width = "300px";
+                slide.style.height = "550px";
+                slide.style.borderRadius = "5px";
+            });
+        }
+
+        function closeslider(){
+            var elements = document.querySelectorAll('div:not(.slider, body, #app, #prewslider, .slides, #slide-1, #slide-2, #slide-3, #slide-4 )');
+            elements.forEach((element) => {
+                element.style.filter = "";
+            });
+            document.querySelector('.gallerytextchange').textContent = "Открыть полностью";
+            document.querySelector('.gallerytextchange').onclick = openslider;
+
+            var slides = document.querySelectorAll(".slides > div");
+
+            slides.forEach((slide) => {
+                slide.style.backgroundSize = "cover";
+                slide.style.width = "250px";
+                slide.style.height = "400px";
+                slide.style.borderRadius = "30px";
+            });
+        }
+
+
+    document.addEventListener("DOMContentLoaded", function(){
+    var iOS = !window.MSStream && /iPad|iPhone|iPod/.test(navigator.userAgent);
+            if (iOS) { 
+                document.querySelector('.yourplatfrom').textContent = "iOS";     
+            }
+            else{                   
+             document.querySelector('.yourplatfrom').textContent = "Android";
+            }
+            if (window.matchMedia('(display-mode: standalone)').matches) {  
+            }else{
+             //setTimeout(window.location.replace("https://vanillamarket.ru/"), 1000);
+            }
+            var bodyBackgroundColor = getComputedStyle(document.body).backgroundColor;
+            document.getElementById('theme-color-meta').setAttribute('content', bodyBackgroundColor);
+            inIframe();
+            function inIframe () {
+                try {
+                    return window.self !== window.top;
+                } catch (e) {
+                    return true;
+                }
+            }
+        })
+        
+ </script>
+
+ <script>
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+ </script>
+
+
+    <style>
+
+        header{
+        font-family: "Raleway";
+        font-weight: 100;
+        font-size: medium;
+        width: 100%;
+        height: 130vh;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        position: fixed;
+        z-index: 9999999999999999;
+        top: 0;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        display: none;
+        transform: translateY(120vh);
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+        #howtoios{
+        width: 96%;
+        margin-left: 2%;
+        height: 130%;
+        margin-top: 2vh;
+        border-radius: 15px;
+        scroll-behavior: smooth;
+        }
+        #howtext{
+        width: calc(90%-20px);
+        padding: 20px;
+        line-height: 20px;
+        }
+        #gifinstall{
+        background-image: url('/vanilmarket/howinstall.gif');
+        width: 100%;
+        height: 85vh;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-top: 20px;
+        }
+
+        #closebtninstios{
+            border: none;
+        background-color: #0f7fff;
+        width: 150px;
+        height: 30px;
+
+        border-radius: 15px;
+        font-size: small;
+        transition: all 0.6s ease;
+        }
+        #forbtnios{
+        display: flex;
+        width: 100%;
+        height: 40px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        margin-top: 20px;
+        }
+        #closebtninstios:hover{
+        background-color: #5799e4;
+        width: 200px;
+        height: 45px;
+        }
+
+        #tabwdc{
+        width: 100%;
+        height: 100vh;
+        z-index: 999999999999999;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border: none;
+        animation: showiframe 0.6s ease-in-out;
+        transition: all 0.6s ease;
+        }
+        #closebtn{
+        border: none;
+        background-color: #44444473;
+        width: 140px;
+        height: 30px;
+
+        border-radius: 15px;
+        font-size: small;
+        transition: all 0.6s ease;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        height: 30px;
+        z-index: 9999999999999999;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        animation: showbtn 0.9s ease-in-out;
+        }
+        #closebtn:hover{
+            background-color: #135aaa;
+        }
+
+        @keyframes showiframe{
+        0%{
+        transform: translateX(120%);
+        }
+        100%{
+            transform: translateX(0);
+         }
+        }
+
+        @keyframes showbtn{
+        0%{
+        transform: translateY(-200px);
+        }
+        100%{
+            transform: translateY(0);
+         }
+        }
+
+
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+        @font-face {
+        font-family: "Raleway";
+        src: url("/vanilmarket/font/SFProText-Light.ttf");
+        }
+        @font-face {
+        font-family: "Raleways";
+        src: url("/vanilmarket/font/SFProText-Regular.ttf");
+        }
+        body{
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        overflow-x: hidden!important;
+        }
+        #prewiev{
+        width: 100%;
+        height: 150px;
+        background: transparent;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        }
+        #appprewiev{
+        background: url('/vanilmarket/prew.jpg');
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 200px;
+        z-index: 1;
+        overflow-x: hidden;
+        border-radius: 10px;
+        }
+        #app{
+        width: 100%;
+        overflow: hidden;
+        height: auto;
+        top: 0;
+        left: 0;
+        scroll-behavior: smooth;
+        font-family: 'Raleway';
+        position: relative;
+        border-radius: 15px 15px 0px 0px;
+        z-index: 3;
+        }
+        #appicon{
+        width: 100px;
+        height: 100px;
+        border-radius: 15px;
+        box-shadow: 0px 5px 5px 0px #23232308;
+        }
+        #appabout{
+        width: 100%;
+        height: 150px;
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        padding: 30px;
+        margin-top: 20px;
+        }
+        #titleapp{
+        font-size: x-large;
+        font-weight: 600;
+        margin-left: 20px;
+        text-align: left;
+        width: 65%;
+        }
+        #developerapp{
+        font-size: small;
+        font-weight: 300;
+        text-align: left;
+        }
+        #developertitle{
+        width: 100%;
+        font-size: small;
+        font-weight: 500;
+        text-align: left;
+        margin-left: 2px;
+        margin-top: 3px;
+        }
+        #sizeapp{
+        width: 100%;
+        font-size: small;
+        font-weight: 500;
+        text-align: left;
+        margin-left: 2px;
+        margin-top: 3px;
+        }
+        #sizeappreal{
+        font-size: small;
+        font-weight: 300;
+        width: 100px;
+        text-align: left;
+        }
+        #buttons{
+        width: 85%;
+        padding-top: 15px;
+        }
+        #installbutton{
+        border: none;
+        background-color: #0077FF;
+        width: 100px;
+        height: 30px;
+
+        border-radius: 15px;
+        font-size: small;
+        transition: all 0.6s ease;
+        }
+        #installbutton:hover{
+            background-color: #135aaa;
+            width: 105px;
+            margin: 15px;
+        }
+        #sitewdc{
+        border: none;
+        background-color: #0f7fff;
+        width: 150px;
+        height: 30px;
+
+        border-radius: 15px;
+        font-size: small;
+        transition: all 0.6s ease;
+        }
+        #sitewdc:hover{
+            background-color: #135aaa;
+            width: 155px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            height: 35px;
+             }
+             #prewsliders{
+            width: 100%;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            }
+            #prewslider{
+            width: 100%;
+            text-align: center;
+            font-size: x-large;
+            letter-spacing: 2px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 100;
+            }
+            .slider {
+            width: calc(100%-40px);
+            text-align: center;
+            overflow: hidden;
+            border-radius: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+            }
+            .slides {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            }
+            .slides::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+            }
+            .slides::-webkit-scrollbar-thumb {
+            background: rgba(208, 208, 208, 0);
+            border-radius: 10px;
+            }
+            .slides::-webkit-scrollbar-track {
+            background: transparent;
+            }
+            .slides > div {
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            width: 250px;
+            height: 400px;
+            margin-left: 10px;
+            border-radius: 30px;
+            background: #eee;
+            transform-origin: center center;
+            transform: scale(1);
+            transition: transform 0.5s;
+            position: relative;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 100px;
+
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            }
+            #slide-1{
+                background-image: url('/vanilmarket/1.jpg');
+            }
+            #slide-2{
+                background-image: url('/vanilmarket/2.jpg');
+            }
+            #slide-3{
+                background-image: url('/vanilmarket/3.jpg');
+            }
+
+            .slider > a {
+            display: inline-flex;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: white;
+            text-decoration: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 0 0.5rem 0;
+            position: relative;
+            }
+            .slider > a:active {
+            top: 1px;
+            }
+            .slider > a:focus {
+            background: #000;
+            }
+             #descapp{
+            width: 100%;
+            height: 300px;
+            padding: 20px;
+            margin-top: 30px;
+            }
+            #descriptiontxtapp{
+            width: 80%;
+            font-size: small;
+            margin-top: 5px;
+            }
+
+            #descriptionabout{
+            width: calc(100% - 80px);
+            padding: 40px;
+            }
+    
+
+            @supports (scroll-snap-type) {
+            .slider > a {
+                display: none;
+             }
+        }
+
+            @media (prefers-color-scheme: dark) {
+                button{
+                color: #fff;
+                }
+                body, #app{
+                background-color: #131313;
+                }
+                div, a, p {
+                color: #ededed;
+                }
+                .slides > div {
+                border: 1px solid #ffffff23;
+                }
+                #appabout{
+                    border-bottom: 1px solid #232323; 
+                }
+                #descriptiontxtapp{
+                    border-bottom: 1px solid #303030; 
+                    line-height: 35px;
+                }
+                #howtoios{
+                background-color: #2a2a2ad0;
+                }
+                #howtext, #descriptionabout{
+                border-bottom: 1px solid #404040;
+                }
+            }
+            @media (prefers-color-scheme: light) {
+                button{
+                color: #fff;
+                }
+                body, #app{
+                background-color: #f5f5f5;
+                }
+                div, a, p {
+                color: #232323;
+                }
+                .slides > div {
+                border: 1px solid #23232323;
+                }
+                #appabout{
+                    border-bottom: 1px solid #dddddd; 
+                }
+                #descriptiontxtapp{
+                    border-bottom: 1px solid #e2e2e2; 
+                    line-height: 35px;
+                }
+
+                #howtoios{
+                background-color: #ebebebbe;
+                box-shadow: 0px 5px 3px 3px #23232337;
+                }
+                #howtext, #descriptionabout{
+                border-bottom: 1px solid #dddddd;
+                }
+            }
+    </style>
+
+</body>
+</html>
